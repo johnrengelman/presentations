@@ -1,0 +1,33 @@
+[
+  {
+    "filename": "index.md",
+    "attr": {
+      "data-state": "title"
+    }
+  },
+  "topics.md",
+  {
+    "filename": "best_practices.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "grails.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "js.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  }
+]
