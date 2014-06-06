@@ -1,4 +1,4 @@
-# Building Java Script Projects
+## Building Java Script Projects
 
 ----
 ## Lots of Tools Available
@@ -40,7 +40,6 @@ allprojects {
 project.afterEvaluate {
   nodeSetup {
     inputs.property 'version', node.version
-    outputs variant.nodeDir
     onlyIf { !(it.variant.nodeDir).exists() }
   }
 }
@@ -152,7 +151,17 @@ Note: Should also configure bower output directory
 Example: Grails WAR contains Grunt/Bower output
 
 ```
-'grails-war'.mustRunAfter compileJs, bowerInstall
+project.tasks.'grails-war'.mustRunAfter compileJs, bowerInstall
 ```
 
 Note: Do not forget!
+
+----
+## Demo
+
+Note:
+git js0 -> add Node plugin to root project
+git js1 -> add Grunt plugin to todo-app, gradle assemble -m
+git js2 -> Gruntfile.js, package.json, src/js, src/less, src/partials
+git js3 -> Setup Bower, bower.json, .bowerrc, web-app/vendorJs
+git js4 -> Add angular source, integrate with asset-pipeline

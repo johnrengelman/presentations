@@ -1,5 +1,11 @@
 [
   {
+    "filename": "opi.md",
+    "attr": {
+      "data-state": "title"
+    }
+  },
+  {
     "filename": "index.md",
     "attr": {
       "data-state": "title"
@@ -24,6 +30,14 @@
   },
   {
     "filename": "js.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "apps.md",
     "attr": {
       "data-separator": "^\n---\n",
       "data-vertical": "^\n----\n",

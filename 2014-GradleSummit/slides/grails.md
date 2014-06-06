@@ -1,9 +1,8 @@
-# Building Grails Projects
+## Building Grails Projects
 
 ----
 ## Quick Start
 
-----
 ```
 buildscript {
   repositories { jcenter() }
@@ -17,14 +16,10 @@ grails {
   groovyVersion '2.1.9'
 }
 
-repositories {
-  jcenter()
-  grails.central()
-}
+repositories { grails.central() }
 
 dependencies {
   bootstrap 'org.grails.plugins:tomcat:7.0.50.1'
-  //... more plugins
 }
 ```
 
@@ -95,19 +90,23 @@ Note: No 'classes' by default
 ```
 
 ----
-Question: How Does it work?
+## Question: How Does it work?
 
-Answer: Grails Launcher
+<br><br>
+
+Answer:
+
+[Grails Launcher](https://github.com/grails/grails-launcher)
 
 ----
-Gradle is not building Grails project
+Gradle is *__NOT__* building Grails project
 
 ----
 What Gradle Does:
 
 1. Create GrailsLaunchContext
 2. Serialize to file
-3. Fork GrailsLauncher Main in new JVM
+3. Fork GrailsLauncher.Main in new JVM
 
 ----
 What GrailsLauncher Does:
@@ -118,11 +117,22 @@ What GrailsLauncher Does:
 4. Call GrailsScriptRunner.executeCommand(scriptName, [args], env)
 
 ----
-# Plugin Gotchyas
+## Plugin Gotchyas
 
 ----
-+ Do NOT apply Java/Groovy plugin
-+ Do NOT apply plugins that apply the Java/Groovy plugin
++ Do **NOT** apply Java/Groovy plugin
++ Do **NOT** apply plugins that apply the Java/Groovy plugin
 + Support for plugin publishing lacks
   + Grails Release Plugin generates POM from BuildConfig
   + Issues with generating plugin.xml, pom.xml, and grails-package-plugin UP-TO-DATE
+
+----
+## Demo
+
+Note:
+Git grails0 -> basic config, then run gradle init
+Git grails1 -> gradle grails-run-app
+Git grails2 ->
+  gradle grails-create-controller -PgrailsArgs='TodoController',
+  show reloading (render "Hello")
+  gradle assemble

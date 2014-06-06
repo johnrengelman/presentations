@@ -6,6 +6,8 @@
 <br><br>
 Flat vs Nested
 
+Note: step0
+
 ----
 ## Flat Layout
 
@@ -36,6 +38,9 @@ myproject/
    +-- baz-service/
 ```
 
+Note: Git: step1 -> gradle projects, no projects
+using flat layout
+
 ----
 ## Auto-Detecting Sub-Projects
 
@@ -65,6 +70,7 @@ rootDir.traverse(
 ```
 
 Note: Do not include buildSrc as a sub-project. Will cause problems.
+Git: step2 -> gradle projects, 3 projects
 
 ----
 ## Name Gradle files after Project names
@@ -87,6 +93,8 @@ void setSubprojectBuildFile(def project) {
 }
 ```
 
+Note: Git: step3 -> gradle projects, 3 projects
+
 ----
 ```
 myproject/
@@ -103,3 +111,12 @@ myproject/
 |
 +-- settings.gradle
 ```
+
+----
+## Demo
+
+Note:
+Git bp0 -> empty project
+Git bp1 -> flat layout, no projects
+Git bp2 -> auto-detect projects, 3
+git bp3 -> use project names for files 
