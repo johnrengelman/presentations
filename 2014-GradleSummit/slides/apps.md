@@ -172,3 +172,11 @@ Total files in resulting Jar: ~4074
 | oneJar | 452 ms |
 | fatJar | 2325 ms |
 | shadow | 62.25 ms |
+
+----
+## Demo
+
+Note:
+git app0 -> Create api project with TO, wire to Grails
+git app1 -> Create service project, wire API (use Strings in @Produces, groovy/reflection, cp load)
+git app2 -> Change grails service to retrieves todo's from DW and pass to angular
