@@ -1,9 +1,13 @@
+<br>
 ## One Build To Rule Them All
 
 Building a Full Application Stack With Gradle
-<br><br><br>
+<br><br>
 John Engelman
 
-@johnrengelman
+Object Partners Inc
+<br>
 
-github.com/johnrengelman
+<small>[@johnrengelman](http://twitter.com/johnrengelman)<br/>
+[github.com/johnrengelman](http://github.com/johnrengelman)
+</small>

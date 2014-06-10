@@ -6,8 +6,6 @@
 <br><br>
 Flat vs Nested
 
-Note: step0
-
 ----
 ## Flat Layout
 
@@ -20,6 +18,10 @@ myproject/
 |
 +-- baz-service/
 ```
+
+Note:
+easier navigation, shorted task paths in Gradle,
+directory explosion
 
 ----
 ## Nested Layout
@@ -38,8 +40,9 @@ myproject/
    +-- baz-service/
 ```
 
-Note: Git: step1 -> gradle projects, no projects
-using flat layout
+Note:
+more organization, easier view with extremely large projects,
+need to dig through folders, long task paths in Gradle
 
 ----
 ## Auto-Detecting Sub-Projects
@@ -54,7 +57,7 @@ def path = [] as LinkedList
 rootDir.traverse(
   type: FileType.FILES,
   nameFilter: ~/.*\.gradle/, //find .gradle files
-  maxDepth: 3, //limit search depth
+  maxDepth: 1, //limit search depth
   preDir: {
       path << it.name // build up the directory structure
       if (skippedDirs.contains(it.name)) { // ignore skipped directories
@@ -69,8 +72,8 @@ rootDir.traverse(
 }
 ```
 
-Note: Do not include buildSrc as a sub-project. Will cause problems.
-Git: step2 -> gradle projects, 3 projects
+Note:
+Set maxDepth based on flat/nested, don't let it traverse beyond project depth
 
 ----
 ## Name Gradle files after Project names
@@ -93,7 +96,7 @@ void setSubprojectBuildFile(def project) {
 }
 ```
 
-Note: Git: step3 -> gradle projects, 3 projects
+Note:
 
 ----
 ```
@@ -119,4 +122,4 @@ Note:
 Git bp0 -> empty project
 Git bp1 -> flat layout, no projects
 Git bp2 -> auto-detect projects, 3
-git bp3 -> use project names for files 
+git bp3 -> use project names for files

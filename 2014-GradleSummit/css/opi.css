@@ -148,7 +148,7 @@ html.title body {
 .reveal .slide-number {
   color: darkblue; }
 
-/**** Current dev Table styles */  
+/**** Current dev Table styles */
 .reveal table {
   margin: auto;
   border-collapse: collapse;
@@ -164,4 +164,12 @@ html.title body {
   text-align: left;
   padding: 0.2em 0.5em 0.2em 0.5em;
   border-bottom: 1px solid;
+}
+
+/** Large Code Block */
+.reveal pre code {
+  padding: 5px;
+  overflow: auto;
+  max-height: 450px;
+  word-wrap: normal;
 }

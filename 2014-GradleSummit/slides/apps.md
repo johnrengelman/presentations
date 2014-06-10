@@ -120,7 +120,7 @@ Note: Publishing, task inputs/outputs, task dependency / no unzip/zip IO overhea
 ----
 Quick Start
 
-```
+```large-code
 buildscript {
   respositories { jcenter() }
   dependencies {
@@ -128,7 +128,7 @@ buildscript {
   }
 }
 
-apply plugin: 'shadow'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 jar {
   manifest {
@@ -145,10 +145,10 @@ shadowJar {
 $ gradle shadowJar
 ```
 
+
 Note:
 mergeServiceFiles adds the ServiceFileTransformer
 Shade's Transformer interface is *mostly* supported
-
 
 ----
 Plugin Defaults
@@ -172,6 +172,32 @@ Total files in resulting Jar: ~4074
 | oneJar | 452 ms |
 | fatJar | 2325 ms |
 | shadow | 62.25 ms |
+
+----
+
+![Performance Chart](slides/chart.png)
+
+Note:
+Single run with each tool. Timing from first to last action of the uberjar task
+does not include times for dependent tasks
+
+----
+
+Integration with Application plugin
+
+```
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+mainClassName = 'myapp.Main'
+```
+
+```
+$ gradle installShadow
+$ gradle runShadow
+$ gradle distShadowZip
+$ gradle distShadowTar
+```
 
 ----
 ## Demo

@@ -1,17 +1,18 @@
 [
   {
-    "filename": "opi.md",
-    "attr": {
-      "data-state": "title"
-    }
-  },
-  {
     "filename": "index.md",
     "attr": {
       "data-state": "title"
     }
   },
-  "topics.md",
+  {
+    "filename": "topics.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
   {
     "filename": "best_practices.md",
     "attr": {
@@ -42,6 +43,12 @@
       "data-separator": "^\n---\n",
       "data-vertical": "^\n----\n",
       "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "opi.md",
+    "attr": {
+      "data-state": "title"
     }
   }
 ]
