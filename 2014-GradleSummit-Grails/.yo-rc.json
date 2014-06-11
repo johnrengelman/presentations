@@ -1,0 +1,8 @@
+{
+  "generator-reveal": {
+    "presentationTitle": "Envolving Grails builds with Gradle",
+    "packageVersion": "0.0.1",
+    "useSass": false,
+    "deployToGithubPages": false
+  }
+}
