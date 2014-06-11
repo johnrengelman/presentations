@@ -23,6 +23,10 @@ dependencies {
 }
 ```
 
+Note:
+Stop-gap until Grails 3
+Grails currently uses Gant
+
 ----
 ## Configuration Options
 
@@ -79,6 +83,9 @@ Note: No 'classes' by default
 
 `$ gradle grails-<script-name>`
 
+Note:
+Need to run a Grails task before getting plugin scripts
+
 ----
 ## Configure Grails tasks
 
@@ -104,9 +111,10 @@ Gradle is *__NOT__* building Grails project
 ----
 What Gradle Does:
 
+1. Resolve dependencies
 1. Create GrailsLaunchContext
-2. Serialize to file
-3. Fork GrailsLauncher.Main in new JVM
+1. Serialize to file
+1. Fork GrailsLauncher.Main in new JVM
 
 ----
 What GrailsLauncher Does:
