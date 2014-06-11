@@ -41,18 +41,59 @@
 
             <div class="slides">
 
-                <% _.forEach(slides, function(slide) { %>
-                    <% if (!_.isArray(slide)) { %>
-                        <%= section(slide) %>
-                    <% } %>
-                    <% if (_.isArray(slide)) { %>
-                        <section>
-                            <% _.forEach(slide, function(verticalslide) { %>
-                                <%= section(verticalslide) %>
-                            <% }); %>
-                        </section>
-                    <% } %>
-                <% }); %>
+                
+                    
+                        
+    <section data-state="title" data-markdown="slides/index.md"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-separator="^
+---
+" data-vertical="^
+----
+" data-notes="^Note:" data-markdown="slides/started.md"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-separator="^
+---
+" data-vertical="^
+----
+" data-notes="^Note:" data-markdown="slides/testing.md"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-separator="^
+---
+" data-vertical="^
+----
+" data-notes="^Note:" data-markdown="slides/config.md"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-state="title" data-markdown="slides/opi.md"></section>
+
+
+                    
+                    
+                
             </div>
 
         </div>

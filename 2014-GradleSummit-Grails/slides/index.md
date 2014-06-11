@@ -1,10 +1,12 @@
+<br>
+## Evolving Grails builds with Gradle
 
-# Envolving Grails builds with Gradle
+<br><br>
+John Engelman
 
-From the terminal, pop in:
+Object Partners Inc
+<br>
 
-  ```yo reveal:slide "Slide Title"```
-
-Available options:
-
- ```--markdown --attributes --notes```
+<small>[@johnrengelman](http://twitter.com/johnrengelman)<br/>
+[github.com/johnrengelman](http://github.com/johnrengelman)
+</small>

@@ -1,1 +1,38 @@
-["index.md"]
+[
+  {
+    "filename": "index.md",
+    "attr": {
+      "data-state": "title"
+    }
+  },
+  {
+    "filename": "started.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "testing.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "config.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "opi.md",
+    "attr": {
+      "data-state": "title"
+    }
+  }
+]
