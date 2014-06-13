@@ -1,3 +1,6 @@
+## Testing Grails projects
+
+----
 ## Running tests
 
 ```
