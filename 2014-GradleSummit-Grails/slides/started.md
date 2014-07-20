@@ -9,7 +9,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'org.grails:grails-gradle-plugin:2.0.1'
+    classpath 'org.grails:grails-gradle-plugin:2.1.0'
   }
 }
 
@@ -57,6 +57,18 @@ configurations: bootstrap, provided, compile, runtime, test
 MUST use fully maven coordinates for deps
 
 ----
+## Built-In Tasks
+
+<br>
+
+| Gradle Task | Grails Task |
+|-------------|-------------|
+| run | run-app |
+| test | test-app (all phases) |
+| war | war (defaults to dev env) |
+| packagePlugin | package-plugin (defaults to source) |
+
+----
 ## Plugin Configurations
 
 ```
@@ -68,7 +80,7 @@ grails {
 ```
 
 ----
-## Executing Grais Scripts
+## Executing Grails Scripts
 
 ```
 $ gradle grails-<script-name>

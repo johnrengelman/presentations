@@ -8,6 +8,34 @@
 > components and participate in a single build to produce a set
 > of linked output artifacts.
 
+----
+## Origin
+
+<br>
+
+Single Repository Multi-Project Build
+
+~20 Developers
+
+<br>
+
+77 Projects (lots of small libs)
+
+4 Grails Applications w/ AngularJS
+
+Grunt/Gulp & Bower to build JS code
+
+9 Dropwizard Applications
+
+2 Gradle Plugins
+
+<br>
+
+Avg. Build Time: ~ 40 mins
+
+Note:
+From clean checkout, Codenarc, Findbugs, Shadow, publishing to Maven
+
 ---
 ## Topics
 <br><br>

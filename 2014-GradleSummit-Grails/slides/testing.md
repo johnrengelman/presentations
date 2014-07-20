@@ -49,8 +49,9 @@ task testInt(type: GrailsTestTask) {
   testResultsDir = new File(buildDir, 'reports/test-int')
 }
 
-test.dependsOn [testUnit, testInt]
+check.dependsOn [testUnit, testInt]
+test.enabled = false
 ```
 
 Note:
-Disable 'grails-test-app' default task
+Disable 'test' default task

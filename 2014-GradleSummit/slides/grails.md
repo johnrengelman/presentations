@@ -6,7 +6,7 @@
 ```
 buildscript {
   repositories { jcenter() }
-  dependencies { classpath 'org.grails:grails-gradle-plugin:2.0.1' }
+  dependencies { classpath 'org.grails:grails-gradle-plugin:2.1.0' }
 }
 
 apply plugin: 'grails'
@@ -60,21 +60,20 @@ dependencies {
 | ---- | ---------------:|
 | init | creates a new Grails application project |
 | init-plugin | creates a new Grails Plugin project |
-| grails-run-app | $ grails run-app |
-| grails-test-app | $ grails test-app  |
-| grails-war | $ grails war <outputFile> |
-| grails-package-plugin | $ grails package-plugin |
+| run | $ grails run-app |
+| test | $ grails test-app  |
+| war | $ grails war <outputFile> |
+| packagePlugin | $ grails package-plugin |
 
 ----
 ## Build Pipeline Participation
 
 | Task | Dependent Tasks |
 | ---- | ---------------:|
-| test | grails-test-app |
-| clean | grails-clean |
+| clean | delete buildPlugins/ dir |
+| assemble | war, packagePlugin |
 | check | no default |
 | build | assemble, check |
-| assemble | grails-war, grails-package-plugin |
 
 Note: No 'classes' by default
 
@@ -90,7 +89,7 @@ Need to run a Grails task before getting plugin scripts
 ## Configure Grails tasks
 
 ```
-'grails-run-app' {
+run {
   env = 'prod'
   args += '--stacktrace'
 }
@@ -132,14 +131,14 @@ What GrailsLauncher Does:
 + Do **NOT** apply plugins that apply the Java/Groovy plugin
 + Support for plugin publishing lacks
   + Grails Release Plugin generates POM from BuildConfig
-  + Issues with generating plugin.xml, pom.xml, and grails-package-plugin UP-TO-DATE
+  + Issues with generating plugin.xml, pom.xml, and packagePlugin UP-TO-DATE
 
 ----
 ## Demo
 
 Note:
 Git grails0 -> basic config, then run gradle init
-Git grails1 -> gradle grails-run-app
+Git grails1 -> gradle run
 Git grails2 ->
   gradle grails-create-controller -PgrailsArgs='TodoController',
   show reloading (render "Hello")
