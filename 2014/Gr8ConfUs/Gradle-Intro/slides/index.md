@@ -1,10 +1,11 @@
+<br>
+## Introduction To Gradle
+<br><br>
+John Engelman
 
-# Introduction To Gradle
+Object Partners Inc
+<br>
 
-From the terminal, pop in:
-
-  ```yo reveal:slide "Slide Title"```
-
-Available options:
-
- ```--markdown --attributes --notes```
+<small>[@johnrengelman](http://twitter.com/johnrengelman)<br/>
+[github.com/johnrengelman](http://github.com/johnrengelman)
+</small>
