@@ -3,6 +3,10 @@ module.exports = (grunt) ->
 
     grunt.initConfig
 
+        nodemon:
+            dev:
+                script: 'js/notes-server.js'
+
         watch:
 
             livereload:
@@ -30,7 +34,7 @@ module.exports = (grunt) ->
             jshint:
                 files: ['js/*.js']
                 tasks: ['jshint']
-        
+
         connect:
 
             livereload:
@@ -76,7 +80,7 @@ module.exports = (grunt) ->
                     filter: 'isFile'
                 }]
 
-        
+
 
 
     # Load all grunt tasks.
@@ -118,7 +122,10 @@ module.exports = (grunt) ->
             'copy'
         ]
 
-    
+    grunt.registerTask 'notesServer', [
+        'buildIndex',
+        'nodemon'
+    ]
 
     # Define default task.
     grunt.registerTask 'default', [
