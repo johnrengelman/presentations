@@ -1,0 +1,21 @@
+task ready() << {
+      println 'Ready'
+}
+
+3.times { num ->
+    task "count${num+1}" << {
+        println num+1
+    }
+}
+                
+
+task go() << {
+      println 'Go!'
+}
+
+count3.dependsOn ready
+count2.dependsOn count3
+count1.dependsOn count2
+go.dependsOn count1
+
+task countdown(dependsOn: go)

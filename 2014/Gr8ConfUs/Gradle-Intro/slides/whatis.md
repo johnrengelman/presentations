@@ -1,10 +1,13 @@
 ## What is Gradle?
 
-----
+<br/>
 
-1. Expressive, declarative, & maintainable build language
-1. Dependency Resolver & Manager
-1. Build Task Scheduler & Executor
+1. Expressive, declarative, & maintainable build language <!-- .element: class="fragment" data-fragment-index="1" -->
+1. Dependency Resolver & Manager <!-- .element: class="fragment" data-fragment-index="2" -->
+1. Build Task Scheduler & Executor <!-- .element: class="fragment" data-fragment-index="3" -->
+1. Build By Convention <!-- .element: class="fragment" data-fragment-index="4" -->
+
+> Gradle is an opinionated framework on top of an unopinionated toolkit <br/> - Szczepan Faber <!-- .element: class="fragment" data-fragment-index="5" -->
 
 ----
 
@@ -12,22 +15,21 @@
 
 ----
 
-It is **NOT** Groovy Ant!
-
-(That tool exists -> [GANT](http://gant.codehaus.org/))
+It is **NOT** Groovy Ant!<br/>(That tool exists -> [GANT](http://gant.codehaus.org/))
 
 ---
 
 ## Core Gradle Features
 
-----
+<br/>
 
-1. Build-By-Convention w/ Flexibility
-1. Project & Build Groovy DSL
-1. Support for Ivy & Maven Dependencies
-1. Multi-Project Builds
-1. Easy to add custom logic
-1. 1st class integration w/ Ant builds
+1. Build-By-Convention w/ Flexibility <!-- .element: class="fragment" data-fragment-index="1" -->
+1. Project & Build Groovy DSL <!-- .element: class="fragment" data-fragment-index="2" -->
+1. Support for Ivy & Maven Dependencies <!-- .element: class="fragment" data-fragment-index="3" -->
+1. Multi-Project Builds <!-- .element: class="fragment" data-fragment-index="4" -->
+1. Easy to add custom logic <!-- .element: class="fragment" data-fragment-index="5" -->
+1. 1st class integration w/ Ant builds <!-- .element: class="fragment" data-fragment-index="6" -->
+1. Extensive public API and plugin ecosystem <!-- .element: class="fragment" data-fragment-index="7" -->
 
 ---
 
@@ -39,8 +41,9 @@ It is **NOT** Groovy Ant!
 
 * 11.28s (`mvn package`)
 * 2.061s (`rm -r target && mvn package`)
+* ~35 lines
 
-```
+```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -79,14 +82,15 @@ It is **NOT** Groovy Ant!
 </project>
 ```
 
----
+----
 
 ### The Same Build w/ Gradle
 
 * 11.07s (`gradle build`)
 * 2.161s (`rm -r build/ && gradle build`)
+* ~13 lines
 
-```
+```groovy
 apply plugin: 'java'
 apply plugin: 'maven'
 

@@ -14,6 +14,30 @@
     }
   },
   {
+    "filename": "whatis.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "gettingstarted.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "jvmbuilds.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
     "filename": "opi.md",
     "attr": {
       "data-state": "title"
