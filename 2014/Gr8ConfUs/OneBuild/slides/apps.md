@@ -124,7 +124,7 @@ Quick Start
 buildscript {
   respositories { jcenter() }
   dependencies {
-    classpath 'com.github.jengelman.gradle.plugins:shadow:0.9.0-M2'
+    classpath 'com.github.jengelman.gradle.plugins:shadow:1.0.2'
   }
 }
 

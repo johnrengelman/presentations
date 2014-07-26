@@ -46,6 +46,22 @@
     }
   },
   {
+    "filename": "multiproject.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
+    "filename": "refs.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
     "filename": "opi.md",
     "attr": {
       "data-state": "title"

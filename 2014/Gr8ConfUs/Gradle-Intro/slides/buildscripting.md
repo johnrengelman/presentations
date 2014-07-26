@@ -80,6 +80,8 @@ plugins {
   * Apply a plugin in build.gradle and all subsequent script plugins can use classes from it
   * Apply a plugin in a script plugin, then those classes are isolated to that script
 
+----
+
 ```groovy
 //shadow.gradle
 buildscript {
