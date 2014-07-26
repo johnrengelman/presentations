@@ -30,6 +30,7 @@ It is **NOT** Groovy Ant!<br/>(That tool exists -> [GANT](http://gant.codehaus.o
 1. Easy to add custom logic <!-- .element: class="fragment" data-fragment-index="5" -->
 1. 1st class integration w/ Ant builds <!-- .element: class="fragment" data-fragment-index="6" -->
 1. Extensive public API and plugin ecosystem <!-- .element: class="fragment" data-fragment-index="7" -->
+1. Task UP-TO-DATE checking <!-- .element: class="fragment" data-fragment-index="8" -->
 
 ---
 

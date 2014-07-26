@@ -38,6 +38,14 @@
     }
   },
   {
+    "filename": "buildscripting.md",
+    "attr": {
+      "data-separator": "^\n---\n",
+      "data-vertical": "^\n----\n",
+      "data-notes": "^Note:"
+    }
+  },
+  {
     "filename": "opi.md",
     "attr": {
       "data-state": "title"

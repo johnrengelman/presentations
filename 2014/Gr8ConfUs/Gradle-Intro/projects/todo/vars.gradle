@@ -1,0 +1,4 @@
+def taskNames = ['foo', 'bar', 'baz']
+taskNames.each {
+    tasks.create(it) << { println it }
+}

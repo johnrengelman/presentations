@@ -48,42 +48,7 @@ classes - Assembles classes 'main'.
 clean - Deletes the build directory.
 jar - Assembles a jar archive containing the main classes.
 testClasses - Assembles classes 'test'.
-
-Build Setup tasks
------------------
-init - Initializes a new Gradle build. [incubating]
-wrapper - Generates Gradle wrapper files. [incubating]
-
-Documentation tasks
--------------------
-groovydoc - Generates Groovydoc API documentation for the main source code.
-javadoc - Generates Javadoc API documentation for the main source code.
-
-Help tasks
-----------
-dependencies - Displays all dependencies declared in root project 'todo'.
-dependencyInsight - Displays the insight into a specific dependency in root project 'todo'.
-help - Displays a help message
-projects - Displays the sub-projects of root project 'todo'.
-properties - Displays the properties of root project 'todo'.
-tasks - Displays the tasks runnable from root project 'todo'.
-
-Verification tasks
-------------------
-check - Runs all checks.
-test - Runs the unit tests.
-
-Rules
------
-Pattern: clean<TaskName>: Cleans the output files of a task.
-Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
-Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts belonging to a configuration.
-
-To see all tasks and more detail, run with --all.
-
-BUILD SUCCESSFUL
-
-Total time: 1.951 secs
+...
 ```
 
 Note: use --all to show dependencies
@@ -97,6 +62,19 @@ $ ./gradlew tasks
 ```
 
 Note: create with gradle wrapper, use to sync gradle versions to team & CI
+
+----
+
+* Passing Properties
+  * `-Dmyprop=myvalue`: JVM System Properties for Gradle JVM
+  * `-Pprojectprop=projectval`: Gradle Project properties
+* Specify Build File (default: `build.gradle`)
+  * `-b <path to build file>`
+* Logging
+  * `-i, --info`: Log more Gradle information
+  * `-d, --debug`: Log more information than Info
+  * `-s, --stacktrace`: Log stacktrace on error
+  * `-q, --quiet`: Log errors only (or printlns)
 
 ----
 
@@ -307,16 +285,75 @@ $ gradle countdown2
 
 ----
 
-* Passing Properties
-  * `-Dmyprop=myvalue`: JVM System Properties for Gradle JVM
-  * `-Pprojectprop=projectval`: Gradle Project properties
-* Specify Build File (default: `build.gradle`)
-  * `-b <path to build file>`
-* Logging
-  * `-i, --info`: Log more Gradle information
-  * `-d, --debug`: Log more information than Info
-  * `-s, --stacktrace`: Log stacktrace on error
-  * `-q, --quiet`: Log errors only (or printlns)
+### Task Inputs & Outputs
+
+* Gradle tracks the inputs & outputs of a task
+* Compares current inputs & outputs against previous runs
+  * If the same, task is considered UP-TO-DATE and is skipped
+* Inputs consist of files and map of properties (String: Object)
+* Outputs consists of files
+* Tasks with no outputs, are never considered UP-TO-DATE and always executed
+* Tasks with outputs but no inputs is considered UP-TO-DATE if the output hasn't changed
+
+----
+
+### Gradle Properties
+
+* Gradle Properties are loaded by the project
+  * From `gradle.properties` in the rootDir of the project
+  * From the command line w/ `-Pproperty=value`
+* Gradle Properties are inherited by child project and merged with child's properties
+
+```groovy
+//gradle.properties
+currentVersion=1.0
+
+//build.gradle
+apply plugin: 'java'
+version = currentVersion
+```
+
+----
+
+### Extra Properties
+
+* Every enhanced object in the Gradle Domain Model can be extends via Extra Properties
+* Each object has a `ext` property to access the space
+* Initially define using `ext.<propertyName>`, then treat like project property
+
+```groovy
+ext.foo = 'bar'
+task echoFoo << { println foo }
+
+task baz {
+  ext.foo = 'baz'
+  doLast {
+    println foo
+  }
+}
+```
+
+```bash
+$ gradle echoFoo echoFoo2
+:echoFoo
+bar
+:echoFoo2
+baz
+```
+
+----
+
+### Variables
+
+Build scripts are Groovy, so define variables normally
+
+```groovy
+def taskNames = ['foo', 'bar', 'baz']
+
+taskNames.each { name ->
+  tasks.create(name) << { println name }
+}
+```
 
 ----
 

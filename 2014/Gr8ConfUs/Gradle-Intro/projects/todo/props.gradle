@@ -1,0 +1,10 @@
+ext.foo = 'bar'
+
+task echoFoo << { println foo }
+
+task echoFoo2 {
+    ext.foo = 'baz'
+    doLast {
+        println foo 
+    }
+}
