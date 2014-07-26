@@ -30,6 +30,7 @@ Note: --type pom inferred if pom.xml exists
 ```bash
 $ gradle tasks
 ```
+
 ```bash
 :tasks
 
@@ -99,34 +100,6 @@ Note: create with gradle wrapper, use to sync gradle versions to team & CI
 
 ----
 
-* Build a Java/Groovy project
-
-```bash
-$ gradle build
-```
-```bash
-:compileJava UP-TO-DATE
-:compileGroovy
-Download http://repo1.maven.org/maven2/org/codehaus/groovy/groovy/2.3.3/groovy-2.3.3.jar
-:processResources UP-TO-DATE
-:classes
-:jar
-:assemble
-:compileTestJava UP-TO-DATE
-:compileTestGroovy
-:processTestResources UP-TO-DATE
-:testClasses
-:test
-:check
-:build
-
-BUILD SUCCESSFUL
-
-Total time: 6.213 secs
-```
-
-----
-
 ### Gradle Tasks
 
 ----
@@ -154,6 +127,84 @@ task helloWorld { //defines a new task with name 'helloWorld'
 task helloWorld << {
   println 'Hello World!'
 }
+```
+
+----
+
+### Task Dependencies & Ordering
+
+* `dependsOn` creates an execution dependency
+* All execution dependencies of a task must also be executed and completed before the task
+
+```groovy
+task a << { println 'a' }
+task b(dependsOn: a) << { println 'b' }
+```
+
+```bash
+$ gradle b
+:a
+a
+:b
+b
+```
+
+----
+
+* `finalizedBy` creates a finalization dependency
+* The finalizer task is added if the finalized task is present in the task graph
+  * finalizer will execute after the finalized even when finalized fails
+  * finalizer will not execute if finalized did no work or was UP-TO-DATE
+
+```groovy
+task cleanup << { println 'cleanup' }
+task run << println 'run'
+
+run.finalizedBy cleanup // 'run' is the "finalized" task, 'cleanup' is the "finalizer"
+```
+
+```bash
+$ gradle run
+:run
+run
+:cleanup
+cleanup
+```
+
+----
+
+* Task ordering allows you to specify ordering w/ creating an execution dependency
+* `mustRunAfter`
+  * Task A runs after Task B only if both are in the task graph
+  * Always respected
+* `shouldRunAfter`
+  * Same as `mustRunAfter` but less strict
+  * Ignored if
+    * Creates an ordering cycle
+    * When executing in parallel and all other dependencies are completed except the `shouldRunAfter`
+
+----
+
+```groovy
+task first << { println 'first' }
+task second << { println 'second' }
+second.mustRunAfter first
+```
+
+```bash
+$ gradle second
+:second
+second
+
+$ gradle first
+:first
+first
+
+$ gradle second first
+:first
+first
+:second
+second
 ```
 
 ----
@@ -218,6 +269,40 @@ $ gradle countdown -q -x ready
 2
 1
 Go!
+```
+
+----
+
+* Task Rules
+  * Dynamically creates tasks based on the requested task name
+
+```groovy
+tasks.addRule('Pattern: countdown<From>') { String taskName ->
+  if (taskName.startsWith('countdown')) {
+    task(taskName) << {
+      ((taskName - 'countdown').toInteger()..0).each {
+        println it
+      }
+    }
+  }
+}
+```
+
+```bash
+$ gradle countdown5
+:countdown5
+5
+4
+3
+2
+1
+0
+
+$ gradle countdown2
+:countdown2
+2
+1
+0
 ```
 
 ----

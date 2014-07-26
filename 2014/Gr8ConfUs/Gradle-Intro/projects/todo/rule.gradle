@@ -1,0 +1,9 @@
+tasks.addRule('Pattern: countdown<From>') { String taskName ->
+    if (taskName.startsWith('countdown')) {
+        task(taskName) << {
+            ((taskName-'countdown').toInteger()..0).each {
+                println it
+            }
+        }
+    }
+}

@@ -4,6 +4,34 @@
 
 ----
 
+* Build a Java/Groovy project
+
+```bash
+$ gradle build
+```
+
+```bash
+:compileJava UP-TO-DATE
+:compileGroovy
+:processResources UP-TO-DATE
+:classes
+:jar
+:assemble
+:compileTestJava UP-TO-DATE
+:compileTestGroovy
+:processTestResources UP-TO-DATE
+:testClasses
+:test
+:check
+:build
+
+BUILD SUCCESSFUL
+
+Total time: 6.213 secs
+```
+
+----
+
 ### Adding Dependencies
 
 * Dependencies are added to a `Configuration`
@@ -57,37 +85,74 @@ repositories {
 
 * Follows the Maven convention
 
-```
+```bash
 + <projectDir>/
-|
 +-- src/
-    |
     +-- main/
-    |   |
     |   +-- java/
-    |   |
     |   +-- groovy/
-    |   |
     |   +-- resources/
-    |
     +-- test/
-        |
         +-- java/
-        |
         +-- groovy/
-        |
         +-- resources/
+```
+
+* But can be configured
+
+```groovy
+sourceSets.main.java.srcDirs = ['src']
+sourceSets.test.java.srcDirs = ['test']
 ```
 
 ----
 
 * Project structure is tied to `SourceSets`
-* JVM projects have 2: main & test
-  * SourceSets has at minimum the java & resources dirs.
-  * Plugins can extends the SourceSet
-    * Gradle plugin adds `<sourceSet>/groovy`
-    * Scala adds `<sourceSet>/scala`
-* Can declare addition `SourceSets` (i.e "intTest")
+* JVM projects have 2 - `main` & `test`
+  * Each `SourceSet` starts w/
+    * `java`
+    * `resources`
+
+```groovy
+apply plugin: 'java'
+
+sourceSets {
+  main {
+    java { ... }
+    resources { ... }
+  }
+  test {
+    java { ... }
+    resources { ... }
+  }
+}
+```
+
+----
+
+* Plugins can extends the SourceSet
+  * Gradle plugin adds `<sourceSet>/groovy`
+  * Scala adds `<sourceSet>/scala`
+
+```groovy
+apply plugin: 'groovy'
+apply plugin: 'scala'
+
+sourceSets {
+  main {
+    groovy { ... }
+    scala { ... }
+  }
+  test {
+    groovy { ... }
+    scala { ... }
+  }
+}
+```
+
+----
+
+* Can declare additional `SourceSets` (i.e "intTest")
 
 ```groovy
 sourceSets {
@@ -95,6 +160,14 @@ sourceSets {
 }
 ```
 
-* Gradle create compile/runtime configurations for source sets
-  * `<sourceSet>Compile` & `<sourceSet>Runtime`
-  * intTestCompile & intTestRuntime
+* Gradle automatically creates compile/runtime configurations for source sets
+
+```groovy
+// No need to declare this
+configurations {
+  intTestCompile
+  intTestRuntime
+}
+```
+
+Note: runtime always extends compile

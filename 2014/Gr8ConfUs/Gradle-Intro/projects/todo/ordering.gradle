@@ -1,0 +1,11 @@
+task first << { println 'first' }
+task second << { println 'second' }
+second.mustRunAfter first
+
+task a << { println 'a' }
+task b << { println 'b' }
+b.dependsOn a
+
+task cleanup << { println 'cleanup' }
+task run << { println 'run' }
+run.finalizedBy cleanup
