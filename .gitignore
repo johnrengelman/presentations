@@ -6,3 +6,7 @@ node_modules/
 .sass-cache
 .gradle/
 build/
+.idea/
+*.iws
+*.iml
+*.ipr
