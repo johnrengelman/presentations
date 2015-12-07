@@ -49,4 +49,12 @@ class GroovyExamples {
     List<Foo> filter(List<Foo> foos) {
         foos.findAll { foo -> foo.name == 'bar' }
     }
+
+    List<Bar> map(List<Foo> foos) {
+        foos.collect { new Bar(foo) }
+    }
+
+    List<Foo> distinct(List<Foo> foos) {
+        foos.unique()
+    }
 }

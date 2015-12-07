@@ -56,4 +56,21 @@ public class JavaExamples {
     List<Foo> filter(List<Foo> foos) {
         return foos.stream().filter(foo -> foo.name.equals("bar")).collect(Collectors.toList());
     }
+
+    List<Bar> map(List<Foo> foos) {
+        return foos.stream().map(Bar::new).collect(Collectors.toList());
+    }
+
+    List<Foo> distinct(List<Foo> foos) {
+        return foos.stream().distinct().collect(Collectors.toList());
+    }
+
+    Bar interfaceMethod(Baz baz) {
+        return baz.bar();
+    }
+
+    Bar useInterface() {
+        return interfaceMethod(() -> "John");
+    }
+
 }

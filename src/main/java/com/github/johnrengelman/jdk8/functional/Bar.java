@@ -9,6 +9,9 @@ public class Bar {
     public Bar(Foo foo) {
         this.name = foo.name;
     }
+    public Bar(Baz baz) {
+        this.name = baz.getName();
+    }
 
     public String name;
 }
