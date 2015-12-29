@@ -2,7 +2,7 @@
   "name": "managing-infrastruce-as-code-with-terraform",
   "version": "0.0.0",
   "dependencies": {
-    "reveal.js": "~2.6.1",
-    "reveal-highlight-themes": "~8.3.0"
+    "reveal.js": "~3.1.0",
+    "highlightjs": "~8.5.0"
   }
 }
