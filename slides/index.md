@@ -498,3 +498,188 @@ output "loadbalancer_dns_name" {
 ```
 
 ---
+
+## Where do modules come from?
+
+---
+
+![Stork delivering baby](http://www.clipartbest.com/cliparts/9Tp/oMG/9TpoMGpbc.png)
+
+---
+
+* File System
+* Version control
+  * Git/Mercurial
+  * GitHub
+  * BitBucket
+* HTTP(S)
+
+---
+
+```
+module "vpc" {
+  source = "../tf-modules/vpc/main"
+  name = "load"
+  cidr_block = "10.1.0.0/16"
+  availability_zones = "us-east-1b,us-east-1c,us-east-1d,us-east-1e"
+}
+```
+
+---
+
+```
+module "rancher" {
+  source = "github.com/objectpartners/tf-modules//rancher/server-standalone-elb-db"
+  server_ami = "ami-49cedf28"
+  server_key_name = "test-default"
+  database_host = "${aws_db_instance.devops_rds.address}"
+  database_schema = "rancher"
+  database_username = "foo"
+  database_password = "${var.db_password}"
+  vpc_id = "${var.vpc_id}"
+  server_subnet_id = "${var.subnet_id}"
+  loadbalancer_subnet_ids = "${var.subnet_id}"
+}
+```
+
+---
+
+```
+source = "github.com/objectpartners/tf-modules//rancher/server-standalone-elb-db"
+```
+
+* `github.com/objectpartner/tf-modules`
+  * The GitHub user/repo
+* `//`
+  * Sets off repo from subdirectory
+* `rancher/server-standalone-elb-db`
+  * Path within repository
+
+---
+
+* Can lock to branch/tags/commit as well
+
+```
+source = "github.com/objectpartners/tf-modules//drone/drone-db?ref=9b2e590"
+```
+
+---
+
+## Using modules
+
+---
+
+* `terraform get`
+  * Resolves/retrieves modules from source
+* `terraform get -u`
+  * Re-resolves module sources
+  * Needed if using version control
+  * Not needed for file system sources
+
+---
+
+## Module Isolation
+
+* Module sources are not shared
+  * Each module uses an isolated path on disk
+  * Different modules can use different version of same source
+  * Nested modules can use different versions
+
+---
+
+## Module Best Practices
+
+---
+
+Keep It Simple...Silly
+
+* HCL doesn't have conditional flow (`if`/`else`)
+* Rely on sources to modify behavior
+
+---
+
+Join multiple resources' attributes into single `output`
+
+```
+output subnet_ids {
+  value = "${join(",", aws_subnet.subnet.*.id)}"
+}
+```
+
+---
+
+Use prefixes on outputs
+
+```
+output sg_web {
+  value = "${aws_security_group.web.id}"
+}
+```
+
+---
+
+Lock version when using 3rd party modules
+
+* https://github.com/terraform-community-modules
+* https://github.com/objectpartners/tf-modules
+
+---
+
+## Team Collaboration
+
+---
+
+The _key_ to collaborating is _knowing_ the _current_ state.
+
+Note: Remember that Terraform is a logical abstraction of physical resources
+
+---
+
+Terraform can sync state to remote storage
+
+* S3
+* Consul
+* Etcd
+* HTTP
+* Atlas
+
+---
+
+## Flow
+
+pull current state from remote ->
+
+terraform apply ->
+
+push state to remote
+
+Note: `terraform remote config` will implicitly pull
+
+---
+
+```bash
+$ terraform remote pull
+$ terraform apply //will implicitly do a terraform remote push after
+```
+
+---
+
+## Disclaimer
+
+<br/>
+Currently,
+
+remote config is stored in the
+
+__state file__
+
+
+---
+
+* Remote state cannot be defined as part of the Terraform files
+  * CLI only
+  * __Best Practice:__ add an `init` script to repo
+* When using remote state
+  * `./.terraform/terraform.tfstate`
+* When __not__ using remote state
+  * `./terraform.tfstate`

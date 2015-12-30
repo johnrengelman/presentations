@@ -35,6 +35,7 @@
   * Authoring Custom Providers
 * Advanced Features
   * Provider Aliases
+  * Importing resources
   * Override files (are **merged**)
 + Load Order
 + Basic Syntax

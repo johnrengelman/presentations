@@ -1,0 +1,11 @@
+.reveal section ul {
+  text-align: left;
+}
+
+.reveal section strong {
+  text-decoration: underline;
+}
+
+.reveal section pre code span {
+  font-size: 80%;
+}
