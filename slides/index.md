@@ -117,11 +117,8 @@ provider "aws" {
 
 ## Referencing Resource Attributes
 
-* Resource attributes are referenced in 1 of 2 forms:
-  * `<resource_type>.<resource_name>.<resource_attribute>`
-  * `<resource_type>.<resource_name>.<index>.<resource_attribute>`
-* Can reference a "collection" for values using the form (when using `count`):
-  * `<resource_type>.<resource_name>.*.<resource_attribute>`
+* Resource attributes are referenced using a standard form:
+  * `<type>.<name>.<attribute>`
 
 ---
 
@@ -327,3 +324,116 @@ resource "template_file" "names" {
 ## HEREDOC, HEREDOC, HEREDOC
 
 ![Heredoc, Heredoc, Heredoc](http://cdn.meme.am/instances2/500x/3583470.jpg)
+
+---
+
+* Create multiline strings
+* Interpolate values using normal style
+* Literal `$` by doubling up - `$$`
+
+---
+
+```
+user_data = <<EOF
+#cloud-config
+write_files:
+ - path: /opt/userify/creds.py
+   content: |
+     # creds.py custom integration
+     api_id = "${var.userifyId}"
+     api_key = "${var.userifyKey}"
+ - path: /etc/default/docker
+   content: |
+     DOCKER_PORT="2375"
+     DOCKER_OPTS="-H tcp://0.0.0.0:$${DOCKER_PORT}"
+EOF
+```
+
+Note: `"` doesn't have to be escaped
+
+---
+
+## Repeat Resources with Count
+
+* Creates multiple physical instances of a logical definition
+* Each physical instance has a unique `count.index` value
+* Can vary the definition using `count.index` as key
+
+---
+
+```
+variable cidrs {
+  default = "10.0.0.0/16,10.1.0.0/16,10.2.0.0/16"
+}
+
+variable azs {
+  default = "us-east-1a,us-east-1b,us-east-1c"
+}
+
+resource "aws_subnet" "public" {
+  count = 3
+  cidr_block = "${element(split(",", var.cidrs), count.index)}"
+  availability_zone = "${element(split(",", var.azs), count.index)}"
+  map_public_ip_on_launch = true
+  vpc_id = "${aws_vpc.vpc.id}"
+}
+```
+
+---
+
+* Use a modified form for accessing attributes of `count` resources
+  * `<type>.<name>.<index>.<attribute>`
+* Can "collect" a list of attributes values using `*`
+  * `<type>.<name>.*.<attribute>`
+
+---
+
+```
+resource "aws_network_acl" "open" {
+  vpc_id = "${aws_vpc.vpc.id}"
+  subnet_ids = [
+    "${aws_subnet.public.*.id}"
+  ]
+  ingress {
+    rule_no = "100"
+    protocol = "-1"
+    action = "allow"
+    from_port = 0
+    to_port = 0
+    cidr_block = "0.0.0.0/0"
+  }
+  egress {
+    rule_no = "100"
+    protocol = "-1"
+    action = "allow"
+    from_port = 0
+    to_port = 0
+    cidr_block = "0.0.0.0/0"
+  }
+}
+```
+
+---
+
+Caveat: When using __list__/__array__ type accessors
+
+* The _interpolation_ results in an array
+* __HOWEVER__, you still __must__ declare the value as an array using `[]`
+
+---
+
+This:
+
+```
+subnets_ids = ["${aws_subnet.public.*.id}"]
+```
+
+---
+
+__NOT__ this:
+
+```
+subnet_ids = "${aws_subnet.public.*.id}"
+```
+
+Note: When the HCL is parsed, this appears to be a String, not an array
