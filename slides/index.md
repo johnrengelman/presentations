@@ -1,5 +1,5 @@
 
-# Managing Infrastruce As Code with Terraform
+# Managing Infrastructure As Code with Terraform
 
 ---
 
@@ -437,3 +437,64 @@ subnet_ids = "${aws_subnet.public.*.id}"
 ```
 
 Note: When the HCL is parsed, this appears to be a String, not an array
+
+---
+
+# Collaborating with Terraform
+
+---
+
+3 useful ways of being a "team"
+
+---
+
+1. Reusable modules
+1. Shared state
+1. Hosted execution w/ Atlas
+
+---
+
+## DRY off with Modules
+
+![Wet dogs wrapped in towels](https://outandabout45.files.wordpress.com/2010/02/g-j-towels.jpg)
+
+---
+
+What's a Module?
+
+---
+
+1. Child tree of resources
+1. Reusable
+1. Encapsulates complexity w/ defined interface
+1. Shareable
+
+---
+
+## Module Inputs
+
+* Module inputs are simply `variables`
+* In fact, we've been using a module this entire time
+  * Implicit `root` module
+
+---
+
+## Module Outputs
+
+* Define outputs using `output` keyword
+* Since there is always the `root` module
+  * Any project can have outputs
+  * Good way to provide some information to users
+    * DNS/IPs
+    * Resource IDs
+    * Access later using `terraform output`
+
+---
+
+```
+output "loadbalancer_dns_name" {
+  value = "${aws_elb.loadbalancer.dns_name}"
+}
+```
+
+---
