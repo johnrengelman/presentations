@@ -89,6 +89,7 @@
 NOTE: "physical" in the sense that its a provider specific item (i.e. elastic cache cluster)
 
 //TODO provisioner examples
+
 ---
 
 ## HashiCorp Configuration Language (HCL)
@@ -730,7 +731,7 @@ __state file__
 
 * Remote state cannot be defined as part of the Terraform files
   * CLI only
-  * __Best Practice:__ add an `init` script to repo 
+  * __Best Practice:__ add an `init` script to repo
 * When using remote state
   * `./.terraform/terraform.tfstate`
 * When __not__ using remote state
