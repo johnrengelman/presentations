@@ -6,6 +6,10 @@
   text-decoration: underline;
 }
 
-.reveal section pre code span {
+.reveal section pre code {
   font-size: 80%;
+}
+
+.reveal section pre code.lang-json-small {
+  font-size: 50%;
 }

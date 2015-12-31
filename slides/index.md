@@ -79,6 +79,7 @@
 
 NOTE: "physical" in the sense that its a provider specific item (i.e. elastic cache cluster)
 
+//TODO provisioner examples
 ---
 
 ## HashiCorp Configuration Language (HCL)
@@ -112,6 +113,43 @@ provider "aws" {
   region = "us-east-1"
 }
 ```
+
+---
+
+## Terraform files
+
+---
+
+All `.tf`/`.tf.json` files in working directory are loaded and __appended__
+
+(in alphabetical order)
+
+
+```
+dir/
+  - aws.tf
+  - instance.tf
+```
+
+Note: duplicate resources will cause errors
+
+---
+
+## Override Files
+
+---
+
+Loaded __AFTER__ normal files.
+
+Are __MERGED__
+
+* `override.tf`
+* `override.tf.json`
+* `temp_override.tf`
+
+Useful for machine or temporary overrides
+
+Note: name must be `override` or end in `_override`
 
 ---
 
@@ -742,3 +780,293 @@ __NO__ execution locks
 ---
 
 //TODO more Atlas stuff...setup test project
+
+---
+
+## What about custom behavior?
+
+---
+
+## Terraform Plugins
+
+---
+
+Plugins are multi-process RPC.
+
+Each `provider`/`provisioner` is a plugin.
+
+Note: each plugin is a separately compiled binary
+
+---
+
+This includes the bundled ones!!
+
+(`aws`, `google`, `etc`)
+
+---
+
+Install plugin binaries to:
+
+`~/.terrformrc` (\*nix)
+
+`%APPDATA%/terraform.rc` (Windows)
+
+---
+
+Plugins follow a naming pattern:
+
+`terraform-<type>-<name>`
+
+* `terraform-provider-aws`
+* `terraform-provider-google`
+* `terraform-provisioner-local-exec`
+
+---
+
+## Plugin Quick Hints
+
+---
+
+Start here:
+
+https://terraform.io/docs/plugins/index.html
+
+---
+
+Use the provided Go library
+
+`github.com/hashicorp/terraform/plugin`
+
+---
+
+## Example Stackdriver Provider
+
+---
+
+```
+provider "stackdriver" {
+  api_key = "MyStackDriverAPIKey"
+}
+
+resource "stackdriver_group" "foo" {
+  name = "foo"
+  //...
+}
+```
+
+---
+
+`main.go`
+
+```go
+package main
+
+import (
+	"github.com/hashicorp/terraform/plugin"
+	"github.com/peoplenet/terraform-provider-stackdriver/stackdriver"
+)
+
+func main() {
+	plugin.Serve(&plugin.ServeOpts{
+		ProviderFunc: stackdriver.Provider,
+	})
+}
+```
+
+---
+
+`stackdriver/provider.go`
+
+```go
+func Provider() terraform.ResourceProvider {
+	return &schema.Provider{
+		ResourcesMap: map[string]*schema.Resource{
+			"stackdriver_group":          resourceGroup(),
+			"stackdriver_endpoint_check": resourceEndpointCheck(),
+		},
+		Schema: map[string]*schema.Schema{
+			"api_key": &schema.Schema{
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("STACKDRIVER_API_KEY", nil),
+				Description: descriptions["api_key"],
+			},//....
+		},
+		ConfigureFunc: configureAPIConnection,
+	}
+}
+```
+
+---
+
+`stackdriver/resource_group.go`
+
+```go
+func resourceGroup() *schema.Resource {
+	return &schema.Resource{
+		Create: resourceGroupCreate,
+		Read:   resourceGroupRead,
+		Update: resourceGroupUpdate,
+		Delete: resourceGroupDelete,
+
+		Schema: map[string]*schema.Schema{
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+			},//....
+		},
+	}
+}
+```
+
+---
+
+## Plugin Testing
+
+---
+
+Plugin library contains test constructs
+
+```go
+
+var testAccProviders map[string]terraform.ResourceProvider
+var testAccProvider *schema.Provider
+
+func init() {
+	testAccProvider = Provider().(*schema.Provider)
+	testAccProviders = map[string]terraform.ResourceProvider{
+		"stackdriver": testAccProvider,
+	}
+}
+```
+
+---
+
+Ensure your Schemas are valid!
+
+```go
+func TestProvider(t *testing.T) {
+	if err := Provider().(*schema.Provider).InternalValidate(); err != nil {
+		t.Fatalf("err: %s", err)
+	}
+}
+```
+
+---
+
+Refer to Terraform source for more examples!
+
+https://github.com/hashicorp/terraform/tree/master/builtin/providers
+
+---
+
+## What about the same provider with different configs?
+
+(e.g. create AWS resources in multiple regions?)
+
+---
+
+
+Provider Aliases
+
+---
+
+```
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "aws" {
+  alias = "west"
+  region = "us-west2"
+}
+```
+
+---
+
+```
+resource "aws_instance" "foo-east" {
+  //provider not specified, so use default 'aws'
+}
+
+resource "aws_instance" "foo-west" {
+  provider = "aws.west"
+  //...
+}
+```
+
+---
+
+## How do I get started with my existing infrastructure?
+
+---
+
+Unfortunately, currently, there is __not__ a built-in "import" feature
+
+---
+
+Can still be done!!
+
+* https://github.com/dtan4/terraforming
+* Manually modified the state file
+  * It's JUST JSON!
+  * For __most__ cases you just need the ID
+  * Then run `terraform refresh`
+  * And fill in the blanks!
+
+---
+
+Example tfstate
+
+```json-small
+{
+    "version": 1,
+    "serial": 3,
+    "modules": [
+        {
+            "path": [
+                "root"
+            ],
+            "outputs": {},
+            "resources": {
+              "aws_security_group.public": {
+                "type": "aws_security_group",
+                "depends_on": [
+                    "terraform_remote_state.network"
+                ],
+                "primary": {
+                    "id": "sg-3e35365a",
+                    "attributes": {
+                    }
+                }
+              }
+            }
+        }
+    ]
+}
+```
+
+---
+
+Let's zoom in!
+
+---
+
+```json
+"aws_security_group.public": {
+  "type": "aws_security_group",
+  "depends_on": [
+      "terraform_remote_state.network"
+  ],
+  "primary": {
+      "id": "sg-3e35365a",
+      "attributes": {
+      }
+  }
+}
+```
+
+1. the full resource name
+1. the resource type
+1. current state
+1. the unique identifier
