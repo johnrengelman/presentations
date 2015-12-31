@@ -645,6 +645,17 @@ Terraform can sync state to remote storage
 
 ---
 
+```bash
+$ terraform \
+  remote config \
+  -backend=S3 \
+  -backend-config="bucket=my-company-tf-states" \
+  -backend-config="key=demo" \
+  -backend-config="region=us-east-1"
+```
+
+---
+
 ## Flow
 
 pull current state from remote ->
