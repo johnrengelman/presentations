@@ -13,3 +13,7 @@
 .reveal section pre code.lang-json-small {
   font-size: 50%;
 }
+
+.reveal img.stork {
+  max-width: 40%;
+}

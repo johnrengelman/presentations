@@ -17,7 +17,11 @@
   * NO loops
   * Each node points to it's dependencies
 
-  //TODO Picture of a DAG
+![Node graph](resources/dag.svg)
+
+(Source: Wikimedia Commons)
+
+---
 
 * Benefits
   * Build nodes in order they are needed
@@ -56,16 +60,21 @@
 
 ---
 
-# The Warriors Three
+## The Warriors Three
 
-![The Warriors Three](http://static.comicvine.com/uploads/scale_super/5/58606/2158499-127314-170141-warriors-three.jpg)
+![The Warriors Three](resources/warriors.jpg)
+
+(Source: ComicVine)
 
 ---
+
+//TODO fix this slide
 
 | Provider                                |
 |:----------------------------------------|
 | API abstraction (AWS, GCE, Vsphere)     |
 | Account details (username, access keys) |
+
 
 | Resource                                      |
 |:----------------------------------------------|
@@ -100,7 +109,6 @@ NOTE: "physical" in the sense that its a provider specific item (i.e. elastic ca
 * Allows comments
 
 //TODO HCL Basic Syntax
-//TODO file load order (IMPORTANT that files are **appended**)
 
 ---
 
@@ -361,7 +369,7 @@ resource "template_file" "names" {
 
 ## HEREDOC, HEREDOC, HEREDOC
 
-![Heredoc, Heredoc, Heredoc](http://cdn.meme.am/instances2/500x/3583470.jpg)
+![Heredoc, Heredoc, Heredoc](resources/alf.jpg)
 
 ---
 
@@ -417,6 +425,8 @@ resource "aws_subnet" "public" {
 }
 ```
 
+//TODO mention the cidrsubnet functions here
+
 ---
 
 * Use a modified form for accessing attributes of `count` resources
@@ -433,14 +443,6 @@ resource "aws_network_acl" "open" {
     "${aws_subnet.public.*.id}"
   ]
   ingress {
-    rule_no = "100"
-    protocol = "-1"
-    action = "allow"
-    from_port = 0
-    to_port = 0
-    cidr_block = "0.0.0.0/0"
-  }
-  egress {
     rule_no = "100"
     protocol = "-1"
     action = "allow"
@@ -494,7 +496,7 @@ Note: When the HCL is parsed, this appears to be a String, not an array
 
 ## DRY off with Modules
 
-![Wet dogs wrapped in towels](https://outandabout45.files.wordpress.com/2010/02/g-j-towels.jpg)
+![Wet dogs wrapped in towels](resources/dogs.jpg)
 
 ---
 
@@ -541,7 +543,9 @@ output "loadbalancer_dns_name" {
 
 ---
 
-![Stork delivering baby](http://www.clipartbest.com/cliparts/9Tp/oMG/9TpoMGpbc.png)
+![Stork delivering baby](http://www.clipartbest.com/cliparts/9Tp/oMG/9TpoMGpbc.png)<!-- .element: class="stork" -->
+
+(Source: ClipArtBest)
 
 ---
 
@@ -584,14 +588,12 @@ module "rancher" {
 
 ```
 source = "github.com/objectpartners/tf-modules//rancher/server-standalone-elb-db"
+                      [1]                    [2]          [3]
 ```
 
-* `github.com/objectpartner/tf-modules`
-  * The GitHub user/repo
-* `//`
-  * Sets off repo from subdirectory
-* `rancher/server-standalone-elb-db`
-  * Path within repository
+* [1] - The GitHub user/repo
+* [2] - delineates repo from subdirectory
+* [3] - Path within repository
 
 ---
 
@@ -696,11 +698,11 @@ $ terraform \
 
 ## Flow
 
-pull current state from remote ->
+sync local state w/ remote ->
 
 terraform apply ->
 
-push state to remote
+push updated state to remote
 
 Note: `terraform remote config` will implicitly pull
 
@@ -708,7 +710,8 @@ Note: `terraform remote config` will implicitly pull
 
 ```bash
 $ terraform remote pull
-$ terraform apply //will implicitly do a terraform remote push after
+$ terraform apply
+//will implicitly perform a push
 ```
 
 ---
@@ -727,7 +730,7 @@ __state file__
 
 * Remote state cannot be defined as part of the Terraform files
   * CLI only
-  * __Best Practice:__ add an `init` script to repo
+  * __Best Practice:__ add an `init` script to repo 
 * When using remote state
   * `./.terraform/terraform.tfstate`
 * When __not__ using remote state
@@ -1053,13 +1056,13 @@ Let's zoom in!
 ---
 
 ```json
-"aws_security_group.public": {
-  "type": "aws_security_group",
+"aws_security_group.public": { [1]
+  "type": "aws_security_group", [2]
   "depends_on": [
       "terraform_remote_state.network"
   ],
-  "primary": {
-      "id": "sg-3e35365a",
+  "primary": { [3]
+      "id": "sg-3e35365a", [4]
       "attributes": {
       }
   }
