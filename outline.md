@@ -38,4 +38,3 @@
   * Importing resources
   * Override files (are **merged**)
 + Load Order
-+ Basic Syntax

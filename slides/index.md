@@ -30,7 +30,7 @@
 * Pieces of the execution
   * Model - logical resources you've defined in Terraform
   * Current State - the state of physical resources from the last Terraform run
-  * Existing State - the state of physical resources as the exist in the remote provider now
+  * Existing State - the state of physical resources as they exist in the remote provider now
 
 ---
 
@@ -694,3 +694,51 @@ __state file__
   * `./.terraform/terraform.tfstate`
 * When __not__ using remote state
   * `./terraform.tfstate`
+
+---
+
+![Remote State Sharing](resources/remote_state.jpg)
+
+---
+
+## Another Disclaimer
+
+<br/>
+__NO__ execution locks
+
+---
+
+* Multiple users can apply changes at the same time
+* Resulting states will clash
+  * State tracks a `serial` incrementor
+  * Helps, but doesn't solve
+
+---
+
+## Solutions
+
+---
+
+##  Use CI
+
+* Pros
+  * Runs on every commit
+  * Runs in hosted environment
+* Cons
+  * Planning/Approving
+  * Error handling
+
+---
+
+## HashiCorp Atlas
+
+* Pros:
+  * HashiCorp backing
+  * Vertical integration
+    * Vagrant, Packer, Consul, Terraform
+* Cons
+  * Cost
+
+---
+
+//TODO more Atlas stuff...setup test project
