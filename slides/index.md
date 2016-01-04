@@ -21,7 +21,7 @@ github.com/johnrengelman
 
 Chief Technologist @ OPI
 
-Soon to be dad
+Soon to be Dad
 
 ---
 
@@ -869,7 +869,27 @@ __NO__ execution locks
 
 ---
 
-//TODO more Atlas stuff...setup test project
+![Atlas Timeline](resources/atlas/tf_event_log.png)
+
+---
+
+![Atlas Timeline](resources/atlas/tf_plan_fail.png)
+
+---
+
+![Atlas Timeline](resources/atlas/tf_plan_fail_details.png)
+
+---
+
+![Atlas Timeline](resources/atlas/tf_plan_success.png)
+
+---
+
+![Atlas Timeline](resources/atlas/tf_apply.png)
+
+---
+
+![Atlas Timeline](resources/atlas/tf_apply_details.png)
 
 ---
 
