@@ -1,6 +1,16 @@
 
 ## Managing <br/> Infrastructure As Code <br/>with <br/>Terraform
 
+John Engelman
+
+January 5, 2015
+
+---
+
+![Terraform Logo](resources/terraform.png)<!-- .element: class="borderless terraform" -->
+
+(Information relevant to v0.6.8)
+
 ---
 
 ## Who Am I?
@@ -15,7 +25,7 @@ Soon to be dad
 
 ---
 
-## OPI
+![Object Partners Logo](resources/opi.gif)<!-- .element: class="borderless opi" -->
 
 * Java, Groovy, JavaScript, Mobile, Open Source
 * ~100 Senior Consultants
@@ -25,7 +35,6 @@ Soon to be dad
 * Founded 1996
 
 ---
-
 
 ## Why Infrastructure As Code?
 
@@ -74,10 +83,20 @@ Soon to be dad
 1. Generate model from logical definition (desired state)
 1. Load current state model (preliminary source state)
 1. Refresh current state model by querying remote provider (final source state)
-1. Calculate different from source state to target state (plan)
+1. Calculate difference from source state to target state (plan)
 1. Apply plan
 
 Note: 2 pieces to terraform: definition & state
+
+---
+
+Terraform __requires__ a copy of the state locally
+
+---
+
+Disclaimer: State files are plain text and will **secrets**
+
+Note: no current mechanism for storing secrets securely
 
 ---
 
@@ -429,8 +448,6 @@ resource "template_file" "names" {
 
 ---
 
-## HEREDOC, HEREDOC, HEREDOC
-
 ![Heredoc, Heredoc, Heredoc](resources/alf.jpg)
 
 ---
@@ -755,6 +772,10 @@ Terraform can sync state to remote storage
 
 ---
 
+![Remote State Sharing](resources/remote_state.jpg)
+
+---
+
 ```bash
 $ terraform \
   remote config \
@@ -805,10 +826,6 @@ __state file__
   * `./.terraform/terraform.tfstate`
 * When __not__ using remote state
   * `./terraform.tfstate`
-
----
-
-![Remote State Sharing](resources/remote_state.jpg)
 
 ---
 

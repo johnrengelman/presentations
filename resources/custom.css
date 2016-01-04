@@ -17,3 +17,16 @@
 .reveal img.stork {
   max-width: 40%;
 }
+
+.reveal img.borderless {
+  border-style: none;
+  box-shadow: none;
+}
+
+.reveal img.opi {
+  max-width: 50%;
+}
+
+.reveal img.terraform {
+  max-width: 50%;
+}
