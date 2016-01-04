@@ -30,3 +30,11 @@
 .reveal img.terraform {
   max-width: 50%;
 }
+
+.reveal img.shrink {
+  max-width: 75%;
+}
+
+.reveal .shrink-text {
+  font-size: 50%;
+}

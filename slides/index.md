@@ -94,7 +94,7 @@ Terraform __requires__ a copy of the state locally
 
 ---
 
-Disclaimer: State files are plain text and will **secrets**
+Disclaimer: State files are plain text and will contain **secrets**
 
 Note: no current mechanism for storing secrets securely
 
@@ -134,6 +134,12 @@ API abstraction (AWS, GCE, Vsphere)
 
 Account details (username, access keys)
 
+```
+provider "aws" {
+  region = "us-east-1"
+}
+```
+
 ---
 
 ## Resources
@@ -141,6 +147,15 @@ Account details (username, access keys)
 Logical representation of "physical" resource
 
 Defines the desired state of a resource
+
+```
+resource "aws_instance" "web" {
+    ami = "ami-1234"
+    instance_type = "t2.micro"
+}
+```
+
+NOTE: "physical" in the sense that its a provider specific item (i.e. elastic cache cluster)
 
 ---
 
@@ -150,7 +165,20 @@ Post-creation "initialization" of resource
 
 Has access to the current properties of a resource
 
-NOTE: "physical" in the sense that its a provider specific item (i.e. elastic cache cluster)
+```
+resource "aws_instance" "web" {
+    ami = "ami-1234"
+    instance_type = "t2.micro"
+    provisioner "remote-exec" {
+        inline = [
+        "puppet apply",
+        "consul join ${aws_instance.web.private_ip}"
+        ]
+    }
+}
+```
+
+NOTE: provisioner is an inline component to a resource. null_resource can be used here
 
 ---
 
@@ -280,9 +308,13 @@ resource "template_file" "hello" {
 ## Providing variables at runtime
 
 * All variables **must** be defined for Terraform at runtime
+  * CLI prompt
+  * Default value
   * CLI arguments
   * Environment Variables
   * Properties file
+
+Note:  CLI will prompt for any undefined variables
 
 ---
 
@@ -344,7 +376,8 @@ last_name="Engelman"
 
 * You can also define a lookup table of variables.
 * Reference using the form: `var.<map_name>.<key>`
-* Cannot be defined at runtime
+* Can be defined at runtime
+  * `-var <map_name>.<key>=<value>`
 
 ---
 
@@ -881,7 +914,7 @@ __NO__ execution locks
 
 ---
 
-![Atlas Timeline](resources/atlas/tf_plan_success.png)
+![Atlas Timeline](resources/atlas/tf_plan_success.png)<!-- .element: class="shrink" -->
 
 ---
 
@@ -889,7 +922,7 @@ __NO__ execution locks
 
 ---
 
-![Atlas Timeline](resources/atlas/tf_apply_details.png)
+![Atlas Timeline](resources/atlas/tf_apply_details.png)<!-- .element: class="shrink" -->
 
 ---
 
@@ -1066,7 +1099,7 @@ func TestProvider(t *testing.T) {
 
 Refer to Terraform source for more examples!
 
-https://github.com/hashicorp/terraform/tree/master/builtin/providers
+https://github.com/hashicorp/terraform/tree/master/builtin/providers<!-- .element: class="shrink-text" -->
 
 ---
 
@@ -1180,3 +1213,11 @@ Let's zoom in!
 1. the resource type
 1. current state
 1. the unique identifier
+
+---
+
+## Questions/Discussion
+
+---
+
+## **Fin**
