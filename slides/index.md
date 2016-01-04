@@ -1,9 +1,42 @@
 
-# Managing Infrastructure As Code with Terraform
+## Managing <br/> Infrastructure As Code <br/>with <br/>Terraform
 
 ---
 
-# Why Infrastructure As Code?
+## Who Am I?
+
+github.com/johnrengelman
+
+@johnrengelman
+
+Chief Technologist @ OPI
+
+Soon to be dad
+
+---
+
+## OPI
+
+* Java, Groovy, JavaScript, Mobile, Open Source
+* ~100 Senior Consultants
+* Minneapolis, Omaha
+* Chicago, Denver
+* Average Tenure Over 5 years
+* Founded 1996
+
+---
+
+
+## Why Infrastructure As Code?
+
+---
+
+* Repeatable
+* Versioned
+* Documented
+* Automated
+* Testable
+* Shareable
 
 ---
 
@@ -44,7 +77,7 @@
 1. Calculate different from source state to target state (plan)
 1. Apply plan
 
-//TODO Why state on disk if just refreshing on run?
+Note: 2 pieces to terraform: definition & state
 
 ---
 
@@ -68,27 +101,37 @@
 
 ---
 
-//TODO fix this slide
+## 3 types of "components"
 
-| Provider                                |
-|:----------------------------------------|
-| API abstraction (AWS, GCE, Vsphere)     |
-| Account details (username, access keys) |
+* Providers
+* Resources
+* Provisioners
 
+---
 
-| Resource                                      |
-|:----------------------------------------------|
-| Logical representation of "physical" resource |
-| Defines the desired state of a resource       |
+## Providers
 
-| Provisioner                                        |
-|:---------------------------------------------------|
-| Post-creation "initialization" of resource         |
-| Has access to the current properties of a resource |
+API abstraction (AWS, GCE, Vsphere)
+
+Account details (username, access keys)
+
+---
+
+## Resources
+
+Logical representation of "physical" resource
+
+Defines the desired state of a resource
+
+---
+
+## Provisioners
+
+Post-creation "initialization" of resource
+
+Has access to the current properties of a resource
 
 NOTE: "physical" in the sense that its a provider specific item (i.e. elastic cache cluster)
-
-//TODO provisioner examples
 
 ---
 
@@ -109,7 +152,7 @@ NOTE: "physical" in the sense that its a provider specific item (i.e. elastic ca
 * Any tool expecting HCL, can accept JSON
 * Allows comments
 
-//TODO HCL Basic Syntax
+Note: no flow control (if/else)
 
 ---
 
@@ -169,9 +212,25 @@ Note: name must be `override` or end in `_override`
 
 ---
 
-## Examples
+## Example
 
-//TODO example of interpolating resource attributes
+```
+resource "aws_security_group" "web" {
+  description = "Allow web access"
+  ingress {
+    protocol = "tcp"
+    from_port = 80
+    to_port = 80
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+  }
+}
+
+resource "aws_instance" "web_server" {
+  vpc_security_group_ids = ["${aws_security_group.web.id}"]
+}
+```
 
 ---
 
@@ -182,8 +241,6 @@ Note: name must be `override` or end in `_override`
   * Can have a __default__ value
 * Reference using the form: `var.<variable_name>`
 
-//TODO examples of using variables
-
 ---
 
 ## Defining a variable
@@ -192,6 +249,10 @@ Note: name must be `override` or end in `_override`
 variable "first_name" {
   description = "The persons's first name" //optional
   default = "Bob" //optional
+}
+
+resource "template_file" "hello" {
+  template = "Hello, ${var.first_name}"
 }
 ```
 
@@ -426,7 +487,15 @@ resource "aws_subnet" "public" {
 }
 ```
 
-//TODO mention the cidrsubnet functions here
+---
+
+## Pro-tip
+
+Utilize functions to make your plans readable and reusable
+
+Hint:
+
+`cidrsubnet` - calculate subnets from an origin cidr
 
 ---
 
