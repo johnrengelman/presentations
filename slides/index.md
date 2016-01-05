@@ -40,6 +40,31 @@ Soon to be Dad
 
 ---
 
+![Cloud Network with local branches](resources/branch-office.png)
+
+Note: throw in another cloud provider, etc
+
+---
+
+## Problem?
+
+* Complex
+* Non-obvious APIs
+* Difficult to manage
+* "Non-Power" UIs
+
+---
+
+![Complex application web](resources/woods-modern.png)<!-- .element: class="opi" -->
+
+(Thanks Dan Woods)
+
+Note: We've already solved this problem with source code, VCS, build tools, CI, etc
+
+---
+
+## Solution
+
 * Repeatable
 * Versioned
 * Documented
